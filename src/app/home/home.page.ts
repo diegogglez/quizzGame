@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -9,11 +10,14 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule],
 })
 export class HomePage {
-  constructor() {}
 
-  start() {}
+  constructor(private router: Router) {}
+
+  start() {
+    this.router.navigate(['/game']);
+  }
 
   continue() {}
-  
+
   contribute() {}
 }
