@@ -1,13 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>game</ion-title>
+    <ion-title>pregunta x</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">game</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid class="ion-text-center">
+    <ion-row>
+      <ion-col size="12">
+        <div class="question">
+          question
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-input>answer</ion-input>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button>send</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button>
+      <ion-icon name="home" [routerLink]="['/home']"></ion-icon>
+      <ion-label>home</ion-label>
+    </ion-tab-button>
+    <ion-tab-button>
+      <ion-icon name="help-circle"></ion-icon>
+      <ion-label>next</ion-label>
+    </ion-tab-button>
+    <ion-tab-button>
+      <ion-icon name="play-circle"></ion-icon>
+      <ion-label>next</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
