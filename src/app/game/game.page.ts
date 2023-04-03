@@ -57,13 +57,14 @@ export class GamePage implements OnInit {
 
   sendAnswer() {
     let value = this.formSendAnswer.value;
-    console.log(value);
-    value.answer == this.questionAnswer 
-      ? this.showAlertCorrect() 
-      : this.showAlertIncorrect();  
+
+    value.answer == this.questionAnswer ? (
+      this.showCorrectAlert(), 
+      this.nextQuestion() 
+    ) : this.showIncorrectAlert(); 
   }
 
-  async showAlertCorrect() {
+  async showCorrectAlert() {
     const alert = await this.alertController.create({
       header: 'Respuesta correcta!',
       message: 'Veremos si puedes con la siguiente',
@@ -73,7 +74,7 @@ export class GamePage implements OnInit {
     let result = await alert.onDidDismiss();
   }
 
-  async showAlertIncorrect() {
+  async showIncorrectAlert() {
     const alert = await this.alertController.create({
       header: 'Respuesta incorrecta :(',
       message: 'sigue intentándolo crack',
@@ -82,5 +83,23 @@ export class GamePage implements OnInit {
     await alert.present();
     let result = await alert.onDidDismiss();
   }
+  
+  async showHelpAlert() {
+    const alert = await this.alertController.create({
+      header: 'Help hint',
+      message: this.helpAnswer,
+      buttons: ['OK']
+    })
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
 
+  nextQuestion() {
+    this.questionNumber++;
+    this.getQuestions();    
+  }
+
+  help() {
+    this.showHelpAlert();
+  }
 }

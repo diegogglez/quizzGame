@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>pregunta x</ion-title>
+    <ion-title>pregunta {{ questionNumber }} de {{ questions.length }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -35,15 +35,15 @@
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button>
-        <ion-icon name="home" [routerLink]="['/home']"></ion-icon>
+      <ion-tab-button [routerLink]="['/home']">
+        <ion-icon name="home"></ion-icon>
         <ion-label>home</ion-label>
       </ion-tab-button>
-      <ion-tab-button>
+      <ion-tab-button (click)="help()">
         <ion-icon name="help-circle"></ion-icon>
         <ion-label>help</ion-label>
       </ion-tab-button>
-      <ion-tab-button>
+      <ion-tab-button (click)="nextQuestion()">
         <ion-icon name="play-circle"></ion-icon>
         <ion-label>next</ion-label>
       </ion-tab-button>
