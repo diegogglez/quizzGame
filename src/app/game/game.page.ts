@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
@@ -27,7 +27,10 @@ export class GamePage implements OnInit {
   questionNumber: any;
   formSendAnswer: FormGroup;
 
-  constructor(private apiService: ApiService, public formBuilder: FormBuilder) { 
+  constructor(
+    private apiService: ApiService, 
+    public formBuilder: FormBuilder,
+    public alertController: AlertController) { 
     this.formSendAnswer = this.formBuilder.group({
       answer: ['', Validators.required]
     })
@@ -55,7 +58,29 @@ export class GamePage implements OnInit {
   sendAnswer() {
     let value = this.formSendAnswer.value;
     console.log(value);
-    
+    value.answer == this.questionAnswer 
+      ? this.showAlertCorrect() 
+      : this.showAlertIncorrect();  
+  }
+
+  async showAlertCorrect() {
+    const alert = await this.alertController.create({
+      header: 'Respuesta correcta!',
+      message: 'Veremos si puedes con la siguiente',
+      buttons: ['OK']
+    })
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
+
+  async showAlertIncorrect() {
+    const alert = await this.alertController.create({
+      header: 'Respuesta incorrecta :(',
+      message: 'sigue intentándolo crack',
+      buttons: ['OK']
+    })
+    await alert.present();
+    let result = await alert.onDidDismiss();
   }
 
 }
