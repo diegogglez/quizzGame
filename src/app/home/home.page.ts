@@ -44,6 +44,4 @@ export class HomePage {
   continue() {
     this.router.navigate(['/game']);
   }
-
-  contribute() {}
 }
