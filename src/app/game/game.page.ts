@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -31,7 +31,8 @@ export class GamePage implements OnInit {
   constructor(
     private apiService: ApiService, 
     public formBuilder: FormBuilder,
-    public alertController: AlertController) { 
+    public alertController: AlertController,
+    public router: Router) { 
 
     this.formSendAnswer = this.formBuilder.group({
       answer: ['', Validators.required]
@@ -116,8 +117,23 @@ export class GamePage implements OnInit {
     let result = await alert.onDidDismiss();
   }
 
+  async showEndAlert() {
+    const alert = await this.alertController.create({
+      header: 'Enhorabuena',
+      message: 'Has completado el juego, de nada por este sueño',
+      buttons: ['OK']
+    })
+    await alert.present();
+    let result = await alert.onDidDismiss();
+    this.router.navigate(['/home']);
+  }
+
   nextQuestion() {
-    this.questionNumber++;
+
+    this.questionNumber < this.questions.length - 1 
+      ? this.questionNumber++
+      : this.showEndAlert();
+
     localStorage.setItem('questionNumber', this.questionNumber)
     this.getQuestions();    
   }
