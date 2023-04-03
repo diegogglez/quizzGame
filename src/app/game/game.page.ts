@@ -21,6 +21,7 @@ import { ApiService } from '../services/api.service';
 export class GamePage implements OnInit {
 
   questions: any = [];
+  wrongAnswers: any = [];
   questionTitle: any;
   questionAnswer: any;
   helpAnswer: any;
@@ -38,6 +39,7 @@ export class GamePage implements OnInit {
 
   ngOnInit() {
     this.getQuestions();
+    this.getWrongAnswers();
     this.questionNumber = 0;
   }
 
@@ -55,13 +57,24 @@ export class GamePage implements OnInit {
     )    
   }
 
+  getWrongAnswers() {
+    this.apiService.getWrongAnswers().subscribe(
+      (res) => {
+        this.wrongAnswers = res
+        console.log(this.wrongAnswers);
+      }, (err) => {
+        console.error(err);
+      }
+    )    
+  }
+
   sendAnswer() {
     let value = this.formSendAnswer.value;
 
     value.answer == this.questionAnswer ? (
       this.showCorrectAlert(), 
       this.nextQuestion() 
-    ) : this.showIncorrectAlert(); 
+    ) : this.showIncorrectAlert()
   }
 
   async showCorrectAlert() {
@@ -75,9 +88,10 @@ export class GamePage implements OnInit {
   }
 
   async showIncorrectAlert() {
+    const random = Math.trunc(Math.random() * this.wrongAnswers.length);
     const alert = await this.alertController.create({
       header: 'Respuesta incorrecta :(',
-      message: 'sigue intentándolo crack',
+      message: this.wrongAnswers[random].answer,
       buttons: ['OK']
     })
     await alert.present();

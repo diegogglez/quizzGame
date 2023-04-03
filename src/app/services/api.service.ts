@@ -18,5 +18,14 @@ export class ApiService {
         })
       )
   }
+
+  getWrongAnswers() {
+    return this.http.get('../../assets/files/wrongAnswers.json')
+      .pipe(
+        map((res: any) => {
+          return res.data;
+        })
+      )
+  }
 }
 
