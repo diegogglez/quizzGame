@@ -32,15 +32,23 @@ export class GamePage implements OnInit {
     private apiService: ApiService, 
     public formBuilder: FormBuilder,
     public alertController: AlertController) { 
+
     this.formSendAnswer = this.formBuilder.group({
       answer: ['', Validators.required]
     })
   }
 
   ngOnInit() {
+    
+  }
+
+  ionViewWillEnter() {
     this.getQuestions();
     this.getWrongAnswers();
-    this.questionNumber = 0;
+    this.questionNumber = localStorage.getItem('questionNumber');
+    if (!this.questionNumber) {
+      this.questionNumber = 0
+    }
   }
 
   getQuestions() {
@@ -110,6 +118,7 @@ export class GamePage implements OnInit {
 
   nextQuestion() {
     this.questionNumber++;
+    localStorage.setItem('questionNumber', this.questionNumber)
     this.getQuestions();    
   }
 
